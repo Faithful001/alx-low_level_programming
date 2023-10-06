@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if $CFILE variable is set
+if [ -z "$CFILE" ]; then
+  echo "Error: \$CFILE variable is not set."
+  exit 1
+fi
+
+# Extract the base name (without extension) from $CFILE
+BASENAME=$(basename -s .c "$CFILE")
+
+# Generate the assembly code in Intel syntax and save it to a .s file with the same base name
+gcc -S -masm=intel "$CFILE" -o "${BASENAME}.s"
+
+# Check if the assembly code generation was successful
+if [ $? -eq 0 ]; then
+  echo "Assembly code (Intel syntax) generated successfully. Output saved as '${BASENAME}.s'."
+else
+  echo "Error: Assembly code generation failed."
+fi
+
