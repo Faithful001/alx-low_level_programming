@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if $CFILE variable is set
+if [ -z "$CFILE" ]; then
+  echo "Error: \$CFILE variable is not set."
+  exit 1
+fi
+
+# Extract the base name (without extension) from $CFILE
+BASENAME=$(basename -s .c "$CFILE")
+
+# Compile the C file without linking and output to a .o file with the same name
+gcc -c "$CFILE" -o "${BASENAME}.o"
+
+# Check if the compilation was successful
+if [ $? -eq 0 ]; then
+  echo "Compilation completed successfully. Object file saved as '${BASENAME}.o'."
+else
+  echo "Error: Compilation failed."
+fi
+
